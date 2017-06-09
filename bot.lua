@@ -936,7 +936,15 @@ function tdcli_update_callback(data)
               delete_msg(chat,msgs)
               print("Deleted [Lock] [Link] [Photo]")
               if database:get('bot:strict'..msg.chat_id_) then
-                chat_kick(msg.chat_id_, msg.sender_user_id_)
+   if database:get('mate:'..msg.chat_id_..':'..msg.from.id) then
+             database:del('mate:'..msg.chat_id_..':'..msg.from.id) 
+      send(msg.chat_id_, msg.id_, 1, 'کاربر ['..msg.from.first_name..'] شما به خاطر ارسال لینک اخراج شدید.\n', 1, 'md') 
+             delete_msg(chat,msgs) 
+             chat_kick(msg.chat_id_, msg.to.id)
+        else
+            database:set('mate:'..msg.chat_id_..':'..msg.from.id, true)
+            send(msg.chat_id_, msg.id_, 1, 'کاربر ["..msg.from.first_name.."] از ارسال لینک خود داری کنید در صورت تکرار از گروه حذف خواهید شد', 1, 'md')
+end
               end
             end
           end

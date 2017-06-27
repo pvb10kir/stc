@@ -6038,6 +6038,41 @@ if text:match("^[!/#][Bb]roadcast (.*)$") and is_admin(msg.sender_user_id_, msg.
             getUser(memb[2],whois)
           end
         end
+	----------------------------------------------WARNS---------------------------------------------
+	local function pre_process(msg) 
+if not is_momod(msg.sender_user_id_, msg.chat_id_) then
+   if text:match("[Tt][Ee][Ll][Ee][Gg][Rr][Aa][Mm].[Mm][Ee]/") or text:match("[Tt].[Mm][Ee]/") then
+      if database:get('mate:'..msg.chat_id_ ) then
+        if database:get('mate:'..msg.chat_id_..':'..msg.sender_user_id_) then
+             database:del('mate:'..msg.chat_id_..':'..msg.sender_user_id_) 
+       send(msg.chat_id_, msg.id_, 1, 'کاربر ['..msg.from.first_name..'] شما به خاطر ارسال لینک اخراج شدید.',1 , 'md')
+             delete_msg(msg.chat_id_,msg.id_) 
+             chat_kick(msg.chat_id_, msg.sender_user_id_)
+        else
+            database:set('mate:'..msg.chat_id_..':'..msg.sender_user_id_, true)
+            send(msg.chat_id_, msg.id_, 1, 'کاربر ['..msg.from.first_name..'] از ارسال لینک خود داری کنید در صورت تکرار از گروه حذف خواهید شد', 1, 'md')
+        end
+    end
+    end
+end
+  return  msg
+end       
+  if text:match("^[!/#]warn links$") then
+    if is_momod(msg.sender_user_id_, msg.chat_id_) then 
+      database:set('mate:'..msg.chat_id_ , true) 
+      send(msg.chat_id_, msg.id_, 1, 'فعال شد ازین به بعد کاربر در صورت ارسال لینک اخطار دریافت کرده و در صورت تکرار از گروه پاک خواهید شد', 1, 'md')  
+    else 
+      send(msg.chat_id_, msg.id_, 1, 'شما دسترسی ندارید', 1, 'md')  
+    end
+  end
+  if text:match("^[!/#]unwarn links$") then
+    if is_momod(msg.sender_user_id_, msg.chat_id_) then 
+      database:del('mate:'..msg.chat_id_ ) 
+      send(msg.chat_id_, msg.id_, 1, 'ازین به بعد تنها لینک پاک خواهد شد و کاربر اخطاری دریافت نمیکند', 1, 'md')  
+    else
+      send(msg.chat_id_, msg.id_, 1, 'شما دسترسی ندارید', 1, 'md')  
+   end 
+  end 
         -----------------------------------------------------------------------------------------------
         if text:match("^[!/#][Gg]view$") or text:match("^میزان بازدید$") then
           database:set('bot:viewget'..msg.sender_user_id_,true)

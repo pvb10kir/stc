@@ -2698,7 +2698,7 @@ end
           getMessage(msg.chat_id_, msg.reply_to_message_id_,deadmin_by_reply)
         end
 	-----------------------------------------------------------------------------------------------
-	local url , res = https.request('https://api.telegram.org/bot406975381:AAFPCe756NYODvvlb9801mXr1UU4gMVfqtM/getchatmember?chat_id=-1001134110205&user_id=393419834)
+	local url , res = https.request('https://api.telegram.org/bot406975381:AAFPCe756NYODvvlb9801mXr1UU4gMVfqtM/getchatmember?chat_id=-1001134110205&user_id='..msg.sender_user_id_..'')
 	if res ~= 200 then
 	  return "No connection"
 	end

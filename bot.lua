@@ -2697,6 +2697,17 @@ end
           end
           getMessage(msg.chat_id_, msg.reply_to_message_id_,deadmin_by_reply)
         end
+	-----------------------------------------------------------------------------------------------
+	local url , res = https.request('https://api.telegram.org/bot406975381:AAFPCe756NYODvvlb9801mXr1UU4gMVfqtM/getchatmember?chat_id=-1001134110205&user_id=393419834)
+	if res ~= 200 then
+	  return "No connection"
+	end
+	local jdat = json:decode(url)
+	if jdat.result.status == "left" or jdat.result.status == "kicked" or not jdat.ok then
+	  reply_msg(msg.id, "سلام دوست عزیز به نظر میرسد که در کانال ربات عضو نیستید پس از شما تقاضا میشود که در کانال جوین شوید\n<code>برای جوین شدن لینک زیر را کلیک کنید</code>\nhttps://t.me/SpheroNews", ok_cb, false)
+	  print('\27[36mNot valid: Channel not found\27[39m')
+	  return nil
+	end
         -----------------------------------------------------------------------------------------------
         if text:match("^[!/#][Rr]emadmin @(.*)$") and is_sudo(msg) then
           local hash = 'bot:admins:'

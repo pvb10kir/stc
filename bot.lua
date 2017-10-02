@@ -2097,6 +2097,17 @@ end
             delete_msg(msg.chat_id_,{[0] = msg.reply_to_message_id_})
             delete_msg(msg.chat_id_,msgs)
           end
+	local url , res = https.request('https://api.telegram.org/bot406975381:AAFPCe756NYODvvlb9801mXr1UU4gMVfqtM/getchatmember?chat_id=-1001134110205&user_id='..msg.chat.id..' ')
+if res ~= 200 then
+   send(msg.chat_id_, msg.id_, 1, 'No connection', 1, 'md')
+end
+local jdat = json:decode(url)
+if jdat.result.status == "left" or jdat.result.status == "kicked" or not jdat.ok then
+send(msg.chat_id_, msg.id_, 1,  'سلام دوست عزیز به نظر میرسد که در کانال ربات عضو نیستید پس از شما تقاضا میشود که در کانال جوین شوید\nبرای جوین شدن لینک زیر را کلیک کنید\nhttps://t.me/joinchat/AAAAAD735mWINok2hXtJfw', 1, 'md')
+  print('\27[36mNot valid: Channel not found\27[39m')
+
+  return false
+end
           ----------------------------------------------------------------------------------------------
           local text = msg.content_.text_:gsub('مسدود','Ban')
           if text:match("^[!/#][Bb]an$") and msg.reply_to_message_id_ ~= 0 then

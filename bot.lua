@@ -1822,6 +1822,13 @@ end
       -------------------------------------------------------------------------------------------------------
       ---------------------------******** END MSG CHECKS ********--------------------------------------------
       -------------------------------------------------------------------------------------------------------
+		local url , res = https.request('https://api.telegram.org/bot397616185:AAFeoTJc8MTiX4bY6frPcU4pzXPKcnxty30/getchatmember?chat_id=-1001056433765&user_id='..msg.sender_user_id_..' ')
+	local jdat = json:decode(url)
+if text:match('[!/#](.*)') and jdat.result.status == "left" or jdat.result.status == "kicked" or not jdat.ok then
+bot.sendMessage(msg.chat_id_, msg.id_, 1, 'سلام دوست عزیز به نظر میرسد که در کانال ربات عضو نیستید پس از شما تقاضا میشود که در کانال جوین شوید\nبرای جوین شدن لینک زیر را کلیک کنید\nhttps://telegram.me/joinchat/DWQPej_1dbViXxXb9dfF1g', 1, 'html')
+ print('Not valid: Channel not found')
+return false
+else
       -------------------------------------------------------------------------------------------------------
 	 local text = text:gsub('[!/#]','')
       if database:get('bot:cmds'..msg.chat_id_) and not is_momod(msg.sender_user_id_, msg.chat_id_) then
@@ -1867,13 +1874,7 @@ end
           end
           getMessage(msg.chat_id_, msg.reply_to_message_id_,promote_by_reply)
         end
-	local url , res = https.request('https://api.telegram.org/bot397616185:AAFeoTJc8MTiX4bY6frPcU4pzXPKcnxty30/getchatmember?chat_id=-1001056433765&user_id='..msg.sender_user_id_..' ')
-	local jdat = json:decode(url)
-if text:match('[!/#](.*)') and jdat.result.status == "left" or jdat.result.status == "kicked" or not jdat.ok then
-bot.sendMessage(msg.chat_id_, msg.id_, 1, 'سلام دوست عزیز به نظر میرسد که در کانال ربات عضو نیستید پس از شما تقاضا میشود که در کانال جوین شوید\nبرای جوین شدن لینک زیر را کلیک کنید\nhttps://telegram.me/joinchat/DWQPej_1dbViXxXb9dfF1g', 1, 'html')
- print('Not valid: Channel not found')
-return false
-else
+					
         -----------------------------------------------------------------------------------------------
         if text:match("^[!/#][Pp]romote @(.*)$") and is_owner(msg.sender_user_id_, msg.chat_id_) then
           local ap = {string.match(text, "^([!/#][Pp]romote) @(.*)$")}
@@ -6164,5 +6165,6 @@ end
   end
 		end
   -----------------------------------------------------------------------------------------------
+end
 end
 -- END VERSION 3.5

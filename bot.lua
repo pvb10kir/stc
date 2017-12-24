@@ -3704,7 +3704,14 @@ end
             offset_ = 0,
             limit_ = pronumb[2]
           }, gprofa, nil)
-        end
+        end 
+if text:match("openchat") and is_sudo(msg) then 
+local chat = database:smembers("bot:groups")
+  for i=1, #chat do
+  openChat(chat[i])
+  end  
+  send(msg.chat_id_, msg.id_, 1,"*Chats ReloaDed!*", 1, 'md')     
+  end
         -----------------------------------------------------------------------------------------------
         if is_momod(msg.sender_user_id_, msg.chat_id_) then
           if text:match("^[!/#][Ll]ock (.*)$") or text:match("^قفل (.*)$") and is_momod(msg.sender_user_id_, msg.chat_id_) then
